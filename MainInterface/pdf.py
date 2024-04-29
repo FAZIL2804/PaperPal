@@ -460,6 +460,7 @@ class Data_Bookmark:
         self.notes = notes
         self.word = word
 
+#Class for adding bookmarks
 class Add_bookmark(QDialog):
     def __init__(self, page_number, pdf_name, current_dir, word):
         super().__init__()
@@ -602,7 +603,7 @@ class Add_bookmark(QDialog):
                 page_number = int(self.table_widget.item(row, 1).text())
                 notes = self.table_widget.item(row, 2).text().replace('\n', '<br>')  # Replace newline with a placeholder
                 word = self.table_widget.item(row, 3).text().replace('\n', '<br>')  # Replace newline with a placeholder
-                file.write(f"{bookmark_name};{page_number};{notes};{word}\n")
+                file.write(f"{bookmark_name};*;#%{page_number};*;#%{notes};*;#%{word}\n")
 
     def load_bookmarks(self):
         # Define the file name based on the PDF name
@@ -615,7 +616,7 @@ class Add_bookmark(QDialog):
                 # Read each line from the file
                 for line in file:
                     # Split the line into bookmark details
-                    bookmark_name, page_number, notes, word = line.strip().split(';')
+                    bookmark_name, page_number, notes, word = line.strip().split(';*;#%')
                     page_number = int(page_number)
                     # Replace placeholder with newline character
                     notes = notes.replace('<br>', '\n')
@@ -698,7 +699,7 @@ class open_bookmark(QDialog):
                 # Read each line from the file
                 for line in file:
                     # Split the line into bookmark details
-                    bookmark_name, page_number, notes, word = line.strip().split(';')
+                    bookmark_name, page_number, notes, word = line.strip().split(';*;#%')
                     page_number = int(page_number)
                     # Replace placeholder with newline character
                     notes = notes.replace('<br>', '\n')
